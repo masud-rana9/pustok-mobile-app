@@ -1,0 +1,72 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Fiction",
+    "published": 1960,
+    "image": "https://ibb.co.com/xzQyDHc"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopian",
+    "published": 1949,
+    "image": "https://example.com/images/1984.jpg"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Classic",
+    "published": 1925,
+    "image": "https://example.com/images/the-great-gatsby.jpg"
+  },
+  {
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "genre": "Adventure",
+    "published": 1851,
+    "image": "https://example.com/images/moby-dick.jpg"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "genre": "Romance",
+    "published": 1813,
+    "image": "https://example.com/images/pride-and-prejudice.jpg"
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "genre": "Fiction",
+    "published": 1951,
+    "image": "https://example.com/images/the-catcher-in-the-rye.jpg"
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "genre": "Fantasy",
+    "published": 1937,
+    "image": "https://example.com/images/the-hobbit.jpg"
+  },
+  {
+    "title": "The Road",
+    "author": "Cormac McCarthy",
+    "genre": "Post-apocalyptic",
+    "published": 2006,
+    "image": "https://example.com/images/the-road.jpg"
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "genre": "Dystopian",
+    "published": 1932,
+    "image": "https://example.com/images/brave-new-world.jpg"
+  },
+  {
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "genre": "Fantasy",
+    "published": 1954,
+    "image": "https://example.com/images/the-lord-of-the-rings.jpg"
+  }
+]
