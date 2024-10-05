@@ -8,24 +8,21 @@ import {
   SafeAreaView,
   Image,
   TouchableWithoutFeedback,
+  TextInput,
 } from "react-native";
 import { AuthContext } from "../firebase/Authprovider/AuthProvider";
+import { MaterialIcons } from "@expo/vector-icons"; // Import Material Icons for the search icon
 
 const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [searchText, setSearchText] = useState(""); // Search text state
+  const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products state
   const { user, logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
     logOut();
-  };
-
-  const handleOutsidePress = () => {
-    if (dropdownVisible) {
-      setDropdownVisible(false);
-    }
   };
 
   useEffect(() => {
@@ -34,6 +31,7 @@ const Home = ({ navigation }) => {
         const response = await fetch("https://dummyjson.com/products");
         const data = await response.json();
         setProducts(data.products);
+        setFilteredProducts(data.products); // Initialize filtered products
       } catch (err) {
         setError(err.message);
       } finally {
@@ -44,21 +42,19 @@ const Home = ({ navigation }) => {
     fetchProducts();
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
+  // Function to filter products by title when the search button is clicked
+  const handleSearch = () => {
+    const filtered = products.filter((item) =>
+      item.title.toLowerCase().includes(searchText.toLowerCase())
     );
-  }
+    setFilteredProducts(filtered);
+  };
 
-  if (error) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
-      </View>
-    );
-  }
+  // Function to reset the search
+  const handleReset = () => {
+    setSearchText(""); // Clear the search text
+    setFilteredProducts(products); // Reset to all products
+  };
 
   const getRandomColor = () => {
     const colors = ["#FFDDC1", "#CFFAFE", "#D1FAE5", "#FFF5EB", "#E6E6FA"];
@@ -81,11 +77,28 @@ const Home = ({ navigation }) => {
     </View>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: {error}</Text>
+      </View>
+    );
+  }
+
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
+    <TouchableWithoutFeedback>
       <SafeAreaView style={styles.container}>
         <View style={styles.navbar}>
           <Text style={styles.navTitle}>Pustok</Text>
+
           <View style={styles.navLinks}>
             {user ? (
               <TouchableOpacity
@@ -113,36 +126,40 @@ const Home = ({ navigation }) => {
                 />
               </TouchableOpacity>
             )}
-            {dropdownVisible && (
-              <View style={styles.dropdown}>
-                {user && <Text style={styles.userEmail}>{user.email}</Text>}
-                <TouchableOpacity onPress={() => navigation.navigate("About")}>
-                  <Text style={styles.dropdownItem}>About</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Contact")}
-                >
-                  <Text style={styles.dropdownItem}>Contact</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.logoutButton}
-                  onPress={
-                    user ? handleLogout : () => navigation.navigate("Login")
-                  }
-                >
-                  <Text style={styles.logoutText}>
-                    {user ? "Logout" : "Login"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
           </View>
         </View>
 
         <View style={styles.content}>
           <Text style={styles.heading}>All Books</Text>
+
+          {/* Search bar with a button and reset button */}
+          <View style={styles.searchBarWrapper}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search by title..."
+              value={searchText}
+              onChangeText={(text) => setSearchText(text)}
+              // Disable outline
+              underlineColorAndroid="transparent" // For Android
+              selectionColor="#6200EE" // Change cursor color if desired
+            />
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={handleSearch}
+            >
+              <MaterialIcons name="search" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.resetButton}
+              onPress={handleReset}
+            >
+              <Text style={styles.resetText}>Reset</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Render filtered products */}
           <FlatList
-            data={products}
+            data={filteredProducts}
             renderItem={renderProduct}
             keyExtractor={(item) => item.id.toString()}
           />
@@ -162,7 +179,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5F5",
-    overflow: "visible", // Ensure parent container doesn't clip
   },
   navbar: {
     backgroundColor: "#6200EE",
@@ -171,8 +187,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    zIndex: 1000, // Ensure navbar is above other content
-    position: "relative", // For zIndex to work
   },
   navTitle: {
     color: "white",
@@ -189,53 +203,61 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     borderWidth: 2,
   },
-  dropdown: {
-    position: "absolute",
-    top: 55,
-    right: 0,
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
-    width: 180,
-    zIndex: 2000,
-  },
-  dropdownItem: {
-    fontSize: 16,
-    padding: 10,
-    color: "#333",
-  },
-  userEmail: {
-    fontSize: 14,
-    fontStyle: "italic",
-    color: "#6200EE",
-    marginBottom: 5,
-  },
-  logoutButton: {
-    backgroundColor: "red",
-    padding: 10,
-    marginTop: 5,
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: "white",
-    textAlign: "center",
-  },
   content: {
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    overflow: "visible", // Ensure no clipping
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
+  },
+  searchBarWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 50, // Rounded corners for the search bar
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,
+    marginBottom: 15,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    padding: 10,
+    borderWidth: 0, // Remove border
+    borderColor: 'transparent', // Ensure border is transparent
+    borderRadius: 25, // Optional: To match the rounded style
+    backgroundColor: '#fff', // Ensure the background is white
+    outline: 'none'
+  },
+  
+  searchButton: {
+    backgroundColor: "#6200EE",
+    padding: 10,
+    borderRadius: 50, // Rounded search button
+    justifyContent: "center",
+    alignItems: "center",
+   
+  },
+  resetButton: {
+    backgroundColor: "gray", // Style for the reset button
+    padding: 10,
+    borderRadius: 50, // Rounded reset button
+    marginLeft: 10, // Spacing between buttons
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  resetText: {
+    color: "white",
+    fontSize: 16,
   },
   productItem: {
     padding: 15,
@@ -250,9 +272,6 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    backgroundColor: "#FFFFE0", // Highlighted background color
-    padding: 5,
-    borderRadius: 5,
   },
   productPrice: {
     fontSize: 14,
@@ -271,35 +290,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
     backgroundColor: "#6200EE",
-    borderRadius: 25, // Rounded button
+    borderRadius: 25,
     alignItems: "center",
-    elevation: 5, // Raised button
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
+    elevation: 5,
   },
   viewDetailsText: {
     color: "white",
-    fontSize: 16, // Larger font size for visibility
+    fontSize: 16,
     fontWeight: "bold",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loadingText: {
-    fontSize: 18,
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorText: {
-    fontSize: 18,
-    color: "red",
   },
   footer: {
     backgroundColor: "#6200EE",
@@ -310,6 +308,23 @@ const styles = StyleSheet.create({
   footerText: {
     color: "white",
     fontSize: 14,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: 20,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 18,
+    color: "red",
   },
 });
 
