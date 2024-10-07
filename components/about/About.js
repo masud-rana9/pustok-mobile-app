@@ -38,7 +38,7 @@ const About = () => {
         </View>
       </View>
 
-      {/* Vision Section */}
+    
       <View style={styles.section}>
         <Text style={styles.subtitle}>Our Vision</Text>
         <View style={styles.card}>
