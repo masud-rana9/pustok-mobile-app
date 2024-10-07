@@ -242,16 +242,16 @@ const styles = StyleSheet.create({
   searchButton: {
     backgroundColor: "#6200EE",
     padding: 10,
-    borderRadius: 50, // Rounded search button
+    borderRadius: 50, 
     justifyContent: "center",
     alignItems: "center",
    
   },
   resetButton: {
-    backgroundColor: "gray", // Style for the reset button
+    backgroundColor: "gray", 
     padding: 10,
-    borderRadius: 50, // Rounded reset button
-    marginLeft: 10, // Spacing between buttons
+    borderRadius: 50, 
+    marginLeft: 10, 
     justifyContent: "center",
     alignItems: "center",
   },
