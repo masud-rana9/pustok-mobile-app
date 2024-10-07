@@ -59,14 +59,14 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: "#F0F4FF", // Light background color
+    backgroundColor: "#F0F4FF", 
   },
   header: {
-    backgroundColor: "#4A90E2", // Blue background for the header
+    backgroundColor: "#4A90E2", 
     paddingVertical: 30,
     marginBottom: 30,
     borderRadius: 10,
-    alignItems: "center", // Centers the title
+    alignItems: "center", 
   },
   title: {
     fontSize: 28,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     marginBottom: 10,
-    textAlign: "center", // Center the text inside the card
+    textAlign: "center", 
   },
 });
 
