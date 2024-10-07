@@ -248,10 +248,10 @@ const styles = StyleSheet.create({
    
   },
   resetButton: {
-    backgroundColor: "gray", 
+    backgroundColor: "gray",
     padding: 10,
     borderRadius: 50, 
-    marginLeft: 10, 
+    marginLeft: 10,
     justifyContent: "center",
     alignItems: "center",
   },
