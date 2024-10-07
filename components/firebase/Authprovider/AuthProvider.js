@@ -18,6 +18,15 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Inside your AuthProvider component
+  const updateUserProfile = async (displayName, email) => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      await user.updateProfile({ displayName });
+      await user.updateEmail(email);
+    }
+  };
+
   const googleSignIn = () => {
     return signInWithPopup(auth, googleProvider);
   };
@@ -54,6 +63,7 @@ const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     googleSignIn,
+    updateUserProfile,
   };
 
   return (

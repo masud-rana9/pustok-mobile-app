@@ -8,6 +8,8 @@ import Contact from "./components/contact/Contact"; // Ensure correct path
 import AuthProvider from "./components/firebase/Authprovider/AuthProvider";
 import About from "./components/about/About";
 import ProductDetails from "./components/details/ProductDetails";
+import Profile from "./components/profile/Profile";
+import EditProfile from "./components/editprofile/EditProfile ";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +29,9 @@ const App = () => {
             name="Login"
             component={Login}
           />
+          <Stack.Screen name="EditProfile" component={EditProfile} />
           <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen
             name="ProductDetails"
             component={ProductDetails}
