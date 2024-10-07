@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 const ProductDetails = ({ route }) => {
-  const { book } = route.params; // Get the book object from navigation params
+  const { book } = route.params;
 
   const handleAddToCart = () => {
     // Add logic to handle adding to cart
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: "#E8EAF6", // Soft lavender background for the entire page
+    backgroundColor: "#E8EAF6",
   },
   section: {
     padding: 15,
@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   titleSection: {
-    backgroundColor: "#FFCDD2", // Soft Red for the title section
+    backgroundColor: "#FFCDD2",
   },
   authorSection: {
-    backgroundColor: "#C8E6C9", // Soft Green for the author section
+    backgroundColor: "#C8E6C9",
   },
   genreSection: {
-    backgroundColor: "#BBDEFB", // Soft Blue for the genre section
+    backgroundColor: "#BBDEFB", 
   },
   publishedSection: {
-    backgroundColor: "#FFF9C4", // Soft Yellow for the published date section
+    backgroundColor: "#FFF9C4", 
   },
   descriptionSection: {
-    backgroundColor: "#D1C4E9", // Soft Purple for the description section
+    backgroundColor: "#D1C4E9", 
   },
   bookTitle: {
     fontSize: 24,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   addToCartButton: {
-    backgroundColor: "#3F51B5", // Dark Blue color for the button
+    backgroundColor: "#3F51B5",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
