@@ -54,7 +54,7 @@ const About = () => {
   );
 };
 
-// Styling for the About Page
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
