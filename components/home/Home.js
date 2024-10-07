@@ -248,10 +248,11 @@ const styles = StyleSheet.create({
    
   },
   resetButton: {
-    backgroundColor: "gray", // Style for the reset button
+    backgroundColor: "gray",
     padding: 10,
-    borderRadius: 50, // Rounded reset button
-    marginLeft: 10, // Spacing between buttons
+    borderRadius: 50, 
+    marginLeft: 10, 
+    
     justifyContent: "center",
     alignItems: "center",
   },
