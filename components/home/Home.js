@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import { MaterialIcons } from "@expo/vector-icons"; // Import Material Icons for the search icon
+import React, { useContext, useEffect, useState } from "react";
 import {
-  View,
-  Text,
   FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
   Image,
-  TouchableWithoutFeedback,
+  SafeAreaView,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { AuthContext } from "../firebase/Authprovider/AuthProvider";
-import { MaterialIcons } from "@expo/vector-icons"; // Import Material Icons for the search icon
 
 const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
@@ -140,8 +140,8 @@ const Home = ({ navigation }) => {
               value={searchText}
               onChangeText={(text) => setSearchText(text)}
               // Disable outline
-              underlineColorAndroid="transparent" // For Android
-              selectionColor="#6200EE" // Change cursor color if desired
+              underlineColorAndroid="transparent" 
+              selectionColor="#6200EE" 
             />
             <TouchableOpacity
               style={styles.searchButton}
@@ -232,10 +232,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     padding: 10,
-    borderWidth: 0, // Remove border
-    borderColor: 'transparent', // Ensure border is transparent
-    borderRadius: 25, // Optional: To match the rounded style
-    backgroundColor: '#fff', // Ensure the background is white
+    borderWidth: 0,
+    borderColor: 'transparent',
+    borderRadius: 25, 
+    backgroundColor: '#fff', 
     outline: 'none'
   },
   
